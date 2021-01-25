@@ -66,9 +66,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun stopCountDown() {
         Log.d("Timer", "Timer was canceled")
-        startButton.text = getString(R.string.startButtonText)
-        updateTimeToCountDownInMs(descriptiveTimeToMilliseconds(coutdownDisplay.text as String))
         timer.cancel()
+        startButton.text = getString(R.string.startButtonText)
+        updateTimeToCountDownInMs(descriptiveTimeToMilliseconds(coutdownDisplay.text as String) + 100)
+
 
     }
 
