@@ -15,3 +15,7 @@ fun descriptiveTimeToMilliseconds(str:String):Long {
     val seconds = parts[0].toLong() * 60 * 60 + parts[1].toLong() * 60 + parts[2].toLong() // Convert to seconds
     return seconds * 1000 // Convert to milliseconds
 }
+
+fun minuteToMilliseconds(min:Int):Long {
+    return (min * 60 * 1000).toLong()
+}
