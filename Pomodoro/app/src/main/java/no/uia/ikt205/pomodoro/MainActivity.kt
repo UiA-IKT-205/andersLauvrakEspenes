@@ -17,10 +17,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var startButton:Button
 
     private lateinit var workSeekBar:SeekBar
-    lateinit var workTimer:TextView
+    lateinit var workTimerText:TextView
 
     private lateinit var pauseSeekbar:SeekBar
-    lateinit var pauseTimer:TextView
+    lateinit var pauseTimerText:TextView
 
     private lateinit var repetitionCounter:EditText
 
@@ -53,11 +53,11 @@ class MainActivity : AppCompatActivity() {
         repetitionCounter = findViewById(R.id.repetitionCounter)
 
         workSeekBar = findViewById(R.id.workSeekBar)
-        workTimer = findViewById(R.id.workTimer)
+        workTimerText = findViewById(R.id.workTimer)
         workSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 timeToCountDownInMinWorkTime = progress + minWorkTime // Calculate the work time from seekbar
-                updateSeekBar(timeToCountDownInMinWorkTime, workTimer)
+                updateSeekBar(timeToCountDownInMinWorkTime, workTimerText)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -68,14 +68,14 @@ class MainActivity : AppCompatActivity() {
                 //TODO("Not yet implemented")
             }
         })
-        updateSeekBar(timeToCountDownInMinWorkTime, workTimer)
+        updateSeekBar(timeToCountDownInMinWorkTime, workTimerText)
 
         pauseSeekbar = findViewById(R.id.pauseSeekBar)
-        pauseTimer = findViewById(R.id.pauseTimer)
+        pauseTimerText = findViewById(R.id.pauseTimer)
         pauseSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 timeToCountDownInMinPauseTime = progress + minPauseTime // Calculate the pause time from seekbar
-               updateSeekBar(timeToCountDownInMinPauseTime, pauseTimer)
+               updateSeekBar(timeToCountDownInMinPauseTime, pauseTimerText)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 //TODO("Not yet implemented")
             }
         })
-        updateSeekBar(timeToCountDownInMinPauseTime, pauseTimer)
+        updateSeekBar(timeToCountDownInMinPauseTime, pauseTimerText)
     }
 
 
@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
                 work = !work // Flip timer status between work and pause
                 if (getRepetitionCounter() > 1) {
                     decrementRepetitionCounter()
-                    updateSeekBar(timeToCountDownInMinWorkTime, workTimer)
-                    updateSeekBar(timeToCountDownInMinPauseTime, pauseTimer)
+                    updateSeekBar(timeToCountDownInMinWorkTime, workTimerText)
+                    updateSeekBar(timeToCountDownInMinPauseTime, pauseTimerText)
                     startCountDown()
                 }
                 else {
@@ -112,9 +112,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTick(millisUntilFinished: Long) {
                 if (work)
-                    updateCountDownDisplay(millisUntilFinished, workTimer)
+                    updateCountDownDisplay(millisUntilFinished, workTimerText)
                 else
-                    updateCountDownDisplay(millisUntilFinished, pauseTimer)
+                    updateCountDownDisplay(millisUntilFinished, pauseTimerText)
             }
         }
 
@@ -131,15 +131,15 @@ class MainActivity : AppCompatActivity() {
         Log.d("Timer", "Timer was canceled")
         timer.cancel()
         startButton.text = getString(R.string.startButtonText)
-        updateCountDownDisplay(descriptiveTimeToMilliseconds(workTimer.text as String) + 100, workTimer)
-        updateCountDownDisplay(descriptiveTimeToMilliseconds(pauseTimer.text as String) + 100, pauseTimer)
+        updateCountDownDisplay(descriptiveTimeToMilliseconds(workTimerText.text as String) + 100, workTimerText)
+        updateCountDownDisplay(descriptiveTimeToMilliseconds(pauseTimerText.text as String) + 100, pauseTimerText)
         workSeekBar.isEnabled = true
         pauseSeekbar.isEnabled = true
         repetitionCounter.isEnabled = true
         timeToCountDownInMs = if(work)
-            descriptiveTimeToMilliseconds(workTimer.text as String) + 100
+            descriptiveTimeToMilliseconds(workTimerText.text as String) + 100
         else
-            descriptiveTimeToMilliseconds(pauseTimer.text as String) + 100
+            descriptiveTimeToMilliseconds(pauseTimerText.text as String) + 100
 
     }
 
@@ -158,9 +158,9 @@ class MainActivity : AppCompatActivity() {
         if(startButton.text == getString(R.string.startButtonText) || timeToCountDownInMs == 0L) {
             updateCountDownDisplay(ms, timer)
             timeToCountDownInMs = if(work)
-                descriptiveTimeToMilliseconds(workTimer.text.toString())
+                descriptiveTimeToMilliseconds(workTimerText.text.toString())
             else
-                descriptiveTimeToMilliseconds(pauseTimer.text.toString())
+                descriptiveTimeToMilliseconds(pauseTimerText.text.toString())
         }
     }
 
