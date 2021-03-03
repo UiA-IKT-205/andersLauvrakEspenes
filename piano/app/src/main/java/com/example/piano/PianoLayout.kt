@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import com.example.piano.databinding.FragmentPianoBinding
 import kotlinx.android.synthetic.main.fragment_piano.view.*
 
@@ -29,36 +30,15 @@ class PianoLayout : Fragment() {
         val fragmentManager = childFragmentManager // Used to add fragments to this fragment
         val fragmentTransaction = fragmentManager.beginTransaction()    // Start fragment transaction, nothing happens until the changes are commited
 
-        whiteKeys.forEach{ it -> // Create a key button for each note
-            val key = WhiteKey.newInstance(it) // Create a full tone key (white key)
+        // For each note in whiteKeys,
+        whiteKeys.forEach{
+            var kp:keyPair
+            if(blackKeys.contains("$it#"))
+                kp = keyPair.newInstance("$it", "$it#")
+            else
+                kp = keyPair.newInstance("$it", "")
 
-            // Create the onKeyDown and onKeyUp here, in order to get same behavior from every type of key
-            key.onKeyDown = {
-                Log.d("Key down", "$it white key down")
-
-            }
-
-            key.onKeyUp = {
-                Log.d("Key up", "$it white key up")
-            }
-
-            fragmentTransaction.add(view.whiteKeys.id, key, "note_$it") // Add the key to the horizontal view
-        }
-
-        blackKeys.forEach { it -> // Create a key button for each note
-            val key = WhiteKey.newInstance(it) // Create a full tone key (white key)
-
-            // Create the onKeyDown and onKeyUp here, in order to get same behavior from every type of key
-            key.onKeyDown = {
-                Log.d("Key down", "$it black key down")
-
-            }
-
-            key.onKeyUp = {
-                Log.d("Key up", "$it black key up")
-            }
-
-            fragmentTransaction.add(view.blackKeys.id, key, "note_$it") // Add the key to the horizontal view
+            fragmentTransaction.add(view.keys.id, kp, "note_$it")
         }
 
         fragmentTransaction.commit()
