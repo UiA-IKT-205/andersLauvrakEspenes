@@ -1,25 +1,22 @@
 package com.example.piano
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.Constraints
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.piano.databinding.FragmentWhiteKeyBinding
-import kotlinx.android.synthetic.main.fragment_white_key.view.*
+import com.example.piano.databinding.FragmentKeyBinding
+import kotlinx.android.synthetic.main.fragment_key.view.*
 
 
-class WhiteKey : Fragment() {
+class Key : Fragment() {
 
-    private var _binding:FragmentWhiteKeyBinding? = null // Note: FragmentWhiteKeyBinding is a automaticly generated class based on the xlm file fragment_white_key, name scheme is mandatory
+    private var _binding:FragmentKeyBinding? = null // Note: FragmentWhiteKeyBinding is a automaticly generated class based on the xlm file fragment_white_key, name scheme is mandatory
     private val binding get() = _binding!!
     private lateinit var note:String // Contains the note this object will represent
-    private var black: Boolean = false// True if key should be black
 
 
     // Declare functions, must be defined by parent class
@@ -39,16 +36,22 @@ class WhiteKey : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentWhiteKeyBinding.inflate(inflater, container, false)
+        _binding = FragmentKeyBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        if(black)
-            view.whiteKeyButton.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.black)
+        if(note.contains("#")) {
+            // Create new layout for black key
+            // Calculate height of black keys depending on screen size, width is more fixed by 52 integer converted to dp
+            var LP: Constraints.LayoutParams = Constraints.LayoutParams((52 * this.resources.displayMetrics.density).toInt(), (this.resources.displayMetrics.heightPixels/2))
+            view.KeyButton.layoutParams = LP // Assign layout to button
+            view.KeyButton.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.black) // Change button color
+        }
 
-        view.whiteKeyButton.setOnTouchListener { _, event ->
+
+        view.KeyButton.setOnTouchListener { _, event ->
             when (event?.action) {  // on touch event get touch event down and up and invoke function
-                MotionEvent.ACTION_DOWN -> this@WhiteKey.onKeyDown?.invoke(note)
-                MotionEvent.ACTION_UP -> this@WhiteKey.onKeyUp?.invoke(note)
+                MotionEvent.ACTION_DOWN -> this@Key.onKeyDown?.invoke(note)
+                MotionEvent.ACTION_UP -> this@Key.onKeyUp?.invoke(note)
             }
             true
         }
@@ -61,13 +64,9 @@ class WhiteKey : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(note: String) =
-            WhiteKey().apply {
+            Key().apply {
                 arguments = Bundle().apply {
                     putString("NOTE", note)
-                    if(note.contains("#")) {
-                        black = true
-                    }
-
                 }
             }
     }

@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context=".WhiteKey">
+    tools:context=".Key">
 
     <Button
-        android:id="@+id/whiteKeyButton"
+        android:id="@+id/KeyButton"
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/white"
-        android:background="@drawable/pianokeyshape"
         android:layout_margin="1dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/pianokeyshape"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
