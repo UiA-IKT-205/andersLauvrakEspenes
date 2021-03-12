@@ -9,10 +9,11 @@
     <Button
         android:id="@+id/KeyButton"
         android:layout_width="50dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_margin="1dp"
         android:background="@drawable/pianokeyshape"
         android:backgroundTint="@color/white"
+        app:layout_constraintHeight_percent="0.85"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
