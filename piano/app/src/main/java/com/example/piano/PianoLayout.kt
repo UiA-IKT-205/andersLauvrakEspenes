@@ -96,6 +96,5 @@ class PianoLayout : Fragment() {
             }
         }
         else Toast.makeText(activity, "File already exists", Toast.LENGTH_SHORT).show()
-
     }
 }

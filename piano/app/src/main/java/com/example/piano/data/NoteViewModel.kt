@@ -36,8 +36,8 @@ class NoteViewModel : ViewModel() {
         return firstNoteTime
     }
 
-    fun setStartTime(starTime: Long){
-        firstNoteTime = starTime
+    fun setStartTime(startTime: Long){
+        firstNoteTime = startTime
     }
 
 }
