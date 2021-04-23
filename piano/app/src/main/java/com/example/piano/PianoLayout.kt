@@ -1,7 +1,5 @@
 package com.example.piano
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.piano.data.NoteViewModel
 import com.example.piano.databinding.FragmentPianoBinding
-import com.example.piano.services.FirebaseService
 import kotlinx.android.synthetic.main.fragment_piano.view.*
 import java.lang.NullPointerException
 
@@ -57,7 +54,7 @@ class PianoLayout : Fragment() {
 
         // Save score on save button click
         view.saveScoreButton.setOnClickListener {
-            Log.d("Layout", viewModel.toString())
+            Log.d(TAG, viewModel.toString())
             val fileName = view.fileNameTextEdit.text.toString()
             if (viewModel.isNotEmpty()) {    // Check if there is a score to save
                 if (validateFilename(fileName)) { // Check if fileName input is valid
@@ -89,14 +86,5 @@ class PianoLayout : Fragment() {
         val suffix = ".score"
         val fileName = prefix + suffix
         this.context?.let { viewModel.save(it, fileName) }
-    }
-
-    private fun save(context: Context, fileName: String) {
-        Intent(context, FirebaseService::class.java).also {
-            Log.i(TAG, viewModel.toString())
-            it.putExtra("FILENAME", fileName)
-            it.putExtra("SCORE", toString())
-            context.startService(it)
-        }
     }
 }
